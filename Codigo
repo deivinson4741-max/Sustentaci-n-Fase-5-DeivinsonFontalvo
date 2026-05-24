@@ -1,0 +1,66 @@
+# Deivinson Fontalvo Martinez
+# Ingeniería de Sistemas
+# Fundamentos de Programación
+# Ejercicio 3:
+
+# Función del negocio
+def calcular_pedido(actual, minimo):
+    return max(0, minimo - actual)
+
+# Creamos la matriz con los datos fijos (Código, Nombre, Stock mínimo)
+# Stock actual sera digitado por el usuario
+datos_maestros = [
+    [67, "Procesadores INTEL", 30],
+    [95, "Memorias RAM 16GB", 60],
+    [36, "Placas base", 45],
+    [81, "Chasis", 28],
+    [12, "Memorias M.2 1TB", 50],
+    [22, "Procesadores AMD", 25]
+]
+
+pedidos_finales = []
+
+print("||||||| INVENTARIO DE HARDWARE DE LA TIENDA |||||||")
+print("Ingrese el stock actual de los siguientes elementos:\n")
+
+for item in datos_maestros:
+    codigo = item[0]
+    nombre = item[1]
+    minimo = item[2]
+    
+    # Pedimos el stock actual
+    while True:
+        try:
+            actual = int(input(f"Digite cantidad: |{nombre}| (Mínimo: {minimo}): "))
+            if actual >= 0:
+                break # Sale del bucle si el número es válido y no es negativo
+            else:
+                print("El stock no puede ser un número negativo. Intente de nuevo.")
+        except ValueError:
+            print("Por favor, ingresa un número entero válido.")
+
+    # Operacion para calcular el pedido
+    cantidad_pedir = calcular_pedido(actual, minimo)
+    
+    
+    pedidos_finales.append([codigo, nombre, cantidad_pedir])
+
+# Tabla de pedidos
+print("\n" + "PEDIDO A REALIZAR:")
+print("\n" + "="*45)
+print(f"{'CÓDIGO':<8} | {'ELEMENTO':<20} | {'SOLICITAR'}")
+print("-" * 45)
+
+for p in pedidos_finales:
+    # Extraemos las 3 variables guardadas
+    cod = p[0]
+    nom = p[1]
+    cant = p[2]
+    
+    
+    if cant > 0:
+        print(f"{cod:<8} | {nom:<20} | {cant} unidades")
+    else:
+        print(f"{cod:<8} | {nom:<20} | No solicitar")
+
+print("="*45)
